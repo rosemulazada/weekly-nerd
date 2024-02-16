@@ -52,28 +52,28 @@ Wil je geen focus style voor muis gebruikers? Gebruik dan ```outline-color: tran
 Sinds een aantal weken kun je in safari doen ```input[type=“checkbox” switch]``` Dit is geen web standaard. (Je kunt niet zeggen [type=“switch”] i.v.m. backwards compatibility).
 Je hebt ook ```input::thumb {}``` en ```input::track{}``` om het te stijlen.
 
+**Easy dropdown without JavaScript**
+[**```<datalist>``` element with a nested ```<option>```.**](https://codepen.io/roza-m/pen/QWoYKyj)
 
-**```<datalist>``` element with a nested ```<option>```.**
-
-
-
-
-input[type=“color”].
+**Ingebouwde Color picker in HTML/CSS**
+```html
+input[type=“color”]
+```
+```css
 input {
 color-scheme: dark;} de browser kan het hele scherm af om kleuren te picken (colorpicker). met color-scheme kun je ook alle form-elementen in dark-mode geven.
+```
+<!-- in-page transitions: te snel. desorienterend: geven geen gevoel van hoe ver je omlaag bent gescrolled door een navigatie. vroeger deden we dit met jquery. -->
 
-in-page transitions: te snel. desorienterend: geven geen gevoel van hoe ver je omlaag bent gescrolled door een navigatie. vroeger deden we dit met jquery.
 
-
-@media (
+<!-- @media (
 prefers-reduced-motion: no-preference ) {
 html {
 scroll-behavior: smooth;
 }}
 
-standaard: geen smooth scroll. pas als aangegeven dat de browser het ondersteunt en het wilt, dan zet je smooth-scrolling aan.
-
-
+standaard: geen smooth scroll. pas als aangegeven dat de browser het ondersteunt en het wilt, dan zet je smooth-scrolling aan. -->
+<!--
 #my-target {
 scroll-margin/padding-top:100px;
 }
@@ -81,10 +81,12 @@ scroll-margin/padding-top:100px;
 #my-target:target {
 outline: 10px solid deeppink;
 transition: 1s ease-in-out outline;
-} hiermee laat je degene weten dat dit de plek is waar de user moet zijn.
+} hiermee laat je degene weten dat dit de plek is waar de user moet zijn. -->
 
-
-
+**Position fixed/sticky**
+Een ```sticky``` element is pas 'fixed' wanneer je een ```top/left/right/bottom``` geeft. Als het 'parent' element van het scherm af is, neemt de parent het sticky element mee, dus het blijft dan niet middenin je scherm staan.
+Dit betekent dat je een 'fixed' element (sticky dus) wel kunt stijlen.
+```css
 div {
 position: relative; 
 }
@@ -92,11 +94,12 @@ position: relative;
 div > .sticky {
 position: sticky;
 top: 50%;
-} zo kun je alsnog een ‘fixed’ element stijlen. sticky is pas ‘fixed’ wanneer je een top/left/right/bottom geeft. als het ‘parent’ element weg is, neemt het het sticky element mee dus het blijft niet middenin je scherm.
+}
+```
 
 
 
-carousels
+<!-- carousels
 scroll-snap-type zet je op de parent. 
 scroll-snap-align zet je op de child.
 
@@ -105,19 +108,24 @@ youtu.be/34zcWFLCDIc
 
 accordions and modals
 details>summary&p
-je kunt ook doen <details open> dan blijft ie open. edit het vormpje van de driehoek met summary::marker {font-size: 1.5rem;} content:””; en [open]summary::marker. let erop dat ze er meerdere kunnen openen. dit is niet een default.
+je kunt ook doen ```<details open>``` dan blijft ie open. edit het vormpje van de driehoek met summary::marker {font-size: 1.5rem;} content:””; en [open]summary::marker. let erop dat ze er meerdere kunnen openen. dit is niet een default.-->
 
 
-dialog
-nieuw html element wat je kan gebruiken om je gebruiker keuzes te laten maken in de form van een modal. je kon alert, confirm & prompt gebruiken in js. dit is geen browser-actie, dus het is onderdeel van de pagina en hindert geen javascript. je voegt een form toe aan de dialog. je hebt nu ok method=“dialog”.
+**dialog**
+Nieuw HTML element wat je kan gebruiken om je gebruiker keuzes te laten maken in de form van een ```modal```. 
+Je kon alert, confirm & prompt gebruiken in JavaScript, maar deze onderbreken andere JavaScript functies. De modal is geen browser-actie, dus het is onderdeel van de pagina en hindert geen JavaScript. Je voegt een form toe aan de dialog. Je hebt nu ook ```method=“dialog”```
+[Artikel met meer informatie hierover](https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop)
+
+```html
 <dialog>
   <form action="" method="dialog"></form>
 <button onclick="$$('dialog').showModal()”>
   Show the dialog
 </button>
 </dialog>
-
-https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop
+```
+Wat stijling hierbij:
+```css
 button {
   font-size: 1.2rem;
   padding: 5px 15px;
@@ -127,44 +135,59 @@ dialog::backdrop {
   background-color: #fff5;
   backdrop-filter: blur(4px)
 }
+```
+
+**Container queries**
+Werken als media queries, maar je kijkt niet naar width/height van browser: je kijkt naar de width/height van het omliggende element.
 
 
-container queries
-werken als media queries, maar je kijkt niet naar width/height van browser : je kijkt naar de width/height van het omliggende element.
-nieuwe unit: 
+**Parent selector**
+```:has()``` werkt als volgt: als mijn formulier een element met het ```id``` other heeft, en die is checked, kijk dan naar #other-text en geef het display:block;
+Zie onderstaande code voor een voorbeeld, en/of lees dit [Polypane artikel met meer informatie](https://polypane.app/blog/where-is-has-new-css-selectors-that-make-your-life-easier/)
+```css
+/* Als formulier #other is gecontroleerd, stijl #other-text */
+form #other:checked #other-text {
+  display: block;
+}
 
+/* Optioneel: verberg #other-text standaard */
+#other-text {
+  display: none;
+}
+```
 
-parent selector
-:has()
-als mijn formulier een element met het id other heeft, en die is checked, dan kijk naar #other-text en geef het display:block;
-form:has(#other:checked) #other-text {}
-https://polypane.app/blog/where-is-has-new-css-selectors-that-make-your-life-easier/
-
-field-sizing
+**Field-sizing**
 https://polypane.app/blog/field-sizing-just-works/
 input elementen hebben een vaste breedte. soms wil je een input die meeschaalt. werkt in chrome: 
+``` css
 input {
-field-sizing: content;}
-dit is altijd inline-block;
-gebruikt hier als je een width geeft een min/max-width
+field-sizing: content;
+}
+/* dit is altijd inline-block;
+gebruikt hier als je een width geeft een min/max-width */
 
-textarea {
-field-sizing: content;}
-dit is block;
+**textarea **{
+field-sizing: content;
+}
+// dit is display: block;
+```
 
-masonry layout
-bestaat lang in firefox. komt dit jaar nieuwe versie van in alle browsers. 
-je kunt een grid maken: grid-template-rows:masonry; aka zeg tegen de browser: ‘vul het maar op!’
+**Masonry layout**
+Bestaat lang in Firefox. Dit jaar komt er een nieuwe versie van in alle browsers.
+- Je kunt een grid maken: grid-template-rows:masonry; waarmee je zegt tegen de browser: ‘vul het maar op!’
+- Je kunt de browser vertellen in welke richting het grid moet zijn (row/grid)
+smashingmagazine.com/native-css-masonry-layout-css-grid/
+- [Een artikel over masonry grids]()
+```css
 .container {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
 grid-template-rows: masonry;
 }
-smashingmagazine.com/native-css-masonry-layout-css-grid/
-you can tell the browser which direction the masonry should be in (row/column)
+```
 
 
-komt in de toekomst: werkt nog niet.
+<!-- komt in de toekomst: werkt nog niet.
 <selectlist>
 	<option></option>
 	<option></option>
@@ -179,6 +202,67 @@ selectlist::part(button) {
 scroll-driven animations
 zitten in chrome. vervangen alle libraries die je gebruikt om aan de hand van de scrolpositie iets te laten gebeuren
 
-bram.us/2023/02/12/scroll-driven-animations-cover-flow-2022-10-06-full-stack-europe/
+bram.us/2023/02/12/scroll-driven-animations-cover-flow-2022-10-06-full-stack-europe/-->
+
+
+### Reflectie
+Killian liet heel veel CSS properties zien waarvan ik helemaal geen idee had dat ze bestonden, en liet ook veel weten over dingen waarmee browser developers mee bezig zijn, en dit maakt me enthausiast om deze dingen bij te houden. Ik had geen idee hoe krachtig CSS eigenlijk kon zijn, en ik heb gemerkt, ook in de korte tijd na zijn weekly nerd presentatie, dat ik hier steeds bewuster van ben wanneer ik iets codeer: ik kijk altijd eerst of het misschien in CSS kan. De quote ```Once your learn something, you don't learn it again``` is me hierdoor ook erg bijgebleven. 
+
+Al gelijk na zijn presentatie heb ik geexperimenteerd met bijvoorbeeld de container widths/height units, en ik merkte dat ik niet de enige was; ook teamleden tijdens WAFS probeerde dit en andere methoden waarover hij verteld heeft.
+
+Via Github Student kan ik toegang krijgen tot een trial versie van zijn web browser voor developers, Polypane, en dit ga ik ook zeker uitproberen.
+
+***
 
 ### Fenna de Wilde
+14/02
+
+**Fenna de Wilde**
+- Creative front end developer
+- Momenteel werkend bij Bakken en Baeck
+- Land of Ride (nice inspo website).
+- Heeft gewerkt bij Phantom (cryptocurrency)
+- Haar 'setup':
+  - Emotion: CSS-in-JS library
+  - Vercel for deploying
+  - Sanity CMS
+  - React
+  	- Framer motion als animatie library voor React
+ 	- React-focus-lock: Beheert de focus binnen een opgegeven bereik in een React-applicatie, zoals een modal venster, om de focus te beperken voor toegankelijkheid.
+  	- React-aria-components: Een library met toegankelijke React-componenten die voldoen aan ARIA-standaarden voor het bouwen van inclusieve webapplicaties. 
+
+**Fenna, Phantom en toegankelijkheid** 
+- Toegankelijkheid was geen eis maar was de eigen motivatie van Fenna
+- In het professionele leven word toegankelijkheid niet serieus genomen en er wordt overheen gekeken. Esthetiek en vloeiende animaties krijgen vaak alle aandacht en prioriteit.
+
+**Wat ze altijd _in ieder geval_ meeneemt in haar werk**
+- Focus state voor keyboard users -> ```:focus-visible.```
+  - ```:focus-visible``` doet het alleen met een keyboard focus of iets dat niet met touch input te maken heeft, zoals bijv in JavaScript focus aanroepen
+- aria-attributes
+- toegankelijke carousels
+- focus guards en esc key configuratie voor modals en overlays
+- goede kleurcontrasten, lettergroottes en lijnlengtes
+  - Hiervoor gebruikt zij Lighthouse audit: een kleurcontrast checker.
+  - Ook in DevTools krijg je een waarschuwing als het contrast niet goed genoeg is.
+
+**Aria-attributes: deep dive**
+1. ```aria-controls```: Dit attribuut wordt gebruikt om de relatie tussen twee elementen aan te geven waarbij het ene element controle heeft over het andere. Het element dat de aria-controls heeft, beïnvloedt of toont het gecontroleerde element. Dit kan handig zijn voor bijvoorbeeld tabbladen, waar één tabblad de inhoud van een ander tabblad controleert.
+2. ```aria-live```: Dit attribuut wordt gebruikt om aan te geven hoe dynamische veranderingen in de inhoud van een element moeten worden aangekondigd aan screenreaders. Het heeft drie waarden:
+	- ```off```: Er worden geen automatische aankondigingen gedaan.
+	- ```polite```: Aankondigingen worden gedaan als er een natuurlijke onderbreking in de spraak van de screenreader is.
+	- ```assertive```: Aankondigingen worden onmiddellijk gedaan, zelfs als er sprake is van actieve spraak. (Deze vindt Fenna best heftig en heeft ze ook nooit gebruikt/hoeven gebruiken).
+3. ```aria-atomic```: Dit attribuut werkt samen met ```aria-live```. Als ```aria-atomic``` is ingesteld op ```true```, betekent dit dat de gehele inhoud van het gecontroleerde element moet worden beschouwd als één enkele wijziging. Zonder ```aria-atomic``` zou alleen de gewijzigde informatie worden aangekondigd.
+ 	 - In het voorbeeld wat Fenna heeft gegeven wordt ```aria-live``` gebruikt om aan te geven dat dynamische veranderingen onmiddellijk moeten worden aangekondigd aan screenreaders. Dit is belangrijk in situaties waarin de inhoud van een element (bijvoorbeeld een score) dynamisch kan veranderen, en ```aria-atomic``` wordt mogelijk gebruikt om ervoor te zorgen dat de volledige inhoud als één wijziging wordt beschouwd.
+
+**Alt image generator**
+Omdat toegankelijkheid zo weinig serieus genomen wordt door developers, heeft ze geprobeerd om een methode te achterhalen waarmee bijvoorbeeld alt teksten automatisch gegenereerd kunnen worden. Maar helaas is AI nog niet ver genoeg om nuttige alt tekst toe te voegen, sterker nog, in het voorbeeld dat ze toonde was het heel erg het tegenovergestelde.. (Een afbeelding van een man in een rolstoel die voor een trap staat, met de alt tekst 'man in wheelchair goes up staircase.' Klopt niet helemaal).
+
+**Laatste tips en dingen om mee te nemen qua toegankelijkheid**
+- Alle autoplay videos moet gepauzeerd kunnen worden
+**- Gebruik zelf een screenreader om te testen of je website echt toegankelijk is of niet!**
+- Voeg een 'skip to main content' button toe, dit hebben alle belangrijkste websites zoals bijvoorbeeld YouTube.
+  	- Uberhaubt content kunnen skippen is belangrijk: stel je hebt een carousel van 20 images, je wilt niet dat de user daar verplicht doorheen moet.
+  	- Extra puntje: als je een carousel hebt, moet de screenreader de elementen die off-screen staan niet oplezen. 
+
+### Reflectie
+Ik heb altijd veel waarde gehecht aan toegankelijkheid en probeer het altijd mee te nemen in mijn projecten, maar ik had geen idee was dat er zoveel dingen waren waar ik niet vanaf wist of waarvan ik niet wist dat daar rekening mee gehouden moet worden voor screenreaders, bijvoorbeeld met de ```aria-live.``` Ik heb al eerder gehoord dat in het bedrijfsleven de semantiek en toegankelijkheid vaak vergeten worden (of juist expres genegeerd worden), maar ik wist niet hoe erg het precies was. Ik zal zeker proberen om, wanneer ik een website design, voorafgaand aan het coderen rekening zal houden met de puntjes die zij hier heeft toegelicht; ik vind het fijn dat ze een lijstje heeft meegegeven met dingen waar ze altijd naar kijkt, dit helpt vor mij om te beginnen met meer bewust zijn over toegankelijkheid.
