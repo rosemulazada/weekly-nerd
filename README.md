@@ -6,7 +6,7 @@ My repo for my Weekly Nerd blog, a place to share and store my insights from the
 ## Index
 - [Killian Valkhof: Stop Using CSS For That](#Killian-Valkhof)
 - [Fenna de Wilde](#Fenna-de-Wilde)
-- [Eerste reflectie]
+- [Eerste reflectie] leerdoelen etc.
 
 ## Killian Valkhof
 07/02: Stop Using JavaScript for That: Moving Features from JavaScript to CSS & HTML.
