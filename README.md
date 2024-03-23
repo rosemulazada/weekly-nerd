@@ -6,7 +6,7 @@ To start off, I've always been fascinated by the idea of running a blog but I wa
 
 Now, I could do this plain and simple, vanilla code: make a certain strict template for each blog page in CSS and hold onto that. But the thing is, that I just don't want to. I want to learn something new, to challenge myself as as developer.
 
-For this blog, I've decided to try to load in the pages dynamically using Express.js and EJS. Wish me luck.
+For this blog, I've decided to try to load in the pages dynamically using Express.js and EJS. I'll be making my start with Express by following Andrew Meads course on Node.js on Udemy. Wish me luck.
 
 *The Weekly Nerd is a (you guessed it) weekly lecture that us developers get during the minor Web Design and Development at the Amsterdam University of Applied Sciences. We're meant to document our notes from it, and reflect on it: what did it make us think about? What have we learnt from it? Is there anything we've learnt that we'll take with us into the workfield? 
 
